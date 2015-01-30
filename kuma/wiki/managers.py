@@ -16,7 +16,7 @@ from .queries import TransformQuerySet
 
 class TransformManager(models.Manager):
 
-    def get_query_set(self):
+    def get_queryset(self):
         return TransformQuerySet(self.model)
 
 
@@ -202,16 +202,16 @@ class DocumentManager(BaseDocumentManager):
     """
     The actual manager, which filters to show only non-deleted pages.
     """
-    def get_query_set(self):
-        return super(DocumentManager, self).get_query_set().filter(deleted=False)
+    def get_queryset(self):
+        return super(DocumentManager, self).get_queryset().filter(deleted=False)
 
 
 class DeletedDocumentManager(BaseDocumentManager):
     """
     Specialized manager for working with deleted pages.
     """
-    def get_query_set(self):
-        return super(DeletedDocumentManager, self).get_query_set().filter(deleted=True)
+    def get_queryset(self):
+        return super(DeletedDocumentManager, self).get_queryset().filter(deleted=True)
 
 
 class DocumentAdminManager(BaseDocumentManager):
@@ -222,8 +222,8 @@ class DocumentAdminManager(BaseDocumentManager):
 
 
 class TaggedDocumentManager(models.Manager):
-    def get_query_set(self):
-        base_qs = super(TaggedDocumentManager, self).get_query_set()
+    def get_queryset(self):
+        base_qs = super(TaggedDocumentManager, self).get_queryset()
         return base_qs.filter(content_object__deleted=False)
 
 
@@ -257,6 +257,6 @@ class DocumentZoneManager(models.Manager):
 class RevisionIPManager(models.Manager):
     def delete_old(self, days=30):
         cutoff_date = date.today() - timedelta(days=days)
-        old_rev_ips = self.get_query_set().filter(
+        old_rev_ips = self.get_queryset().filter(
             revision__created__lte=cutoff_date)
         old_rev_ips.delete()
