@@ -20,21 +20,9 @@ for item in list(sys.path):
         sys.path.remove(item)
 sys.path[:0] = new_sys_path
 
-# Now we can import from third-party libraries.
 from django.core.management import execute_from_command_line
 
-settings_mod = 'settings'
-
-try:
-    import settings_local
-    settings_mod = 'settings_local'
-except ImportError:
-    pass
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_mod)
-
-import jingo.monkey
-jingo.monkey.patch()
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kuma.settings.dev')
 
 if __name__ == "__main__":
     execute_from_command_line(sys.argv)

@@ -8,7 +8,6 @@ import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from nose import SkipTest
-import test_utils
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -18,7 +17,7 @@ import constance.config
 from waffle.models import Switch
 
 from kuma.core.exceptions import ProgrammingError
-from kuma.core.tests import override_constance_settings
+from kuma.core.tests import override_constance_settings, KumaTestCase
 from kuma.wiki.constants import REDIRECT_CONTENT
 from kuma.wiki.exceptions import (PageMoveError,
                                   DocumentRenderedContentNotAvailable,
@@ -335,7 +334,8 @@ class DocumentTests(UserTestCase):
         d = document(is_redirect=True, html=html)
         eq_(href, d.redirect_url())
 
-class PermissionTests(test_utils.TestCase):
+
+class PermissionTests(KumaTestCase):
 
     def setUp(self):
         """Set up the permissions, groups, and users needed for the tests"""
@@ -1131,9 +1131,7 @@ class RenderExpiresTests(UserTestCase):
 
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
-    @mock.patch_object(tasks.render_document, 'delay')
-    def test_render_stale(self, mock_render_document_delay,
-                          mock_kumascript_get):
+    def test_render_stale(self, mock_kumascript_get):
         mock_kumascript_get.return_value = ('MOCK CONTENT', None)
 
         now = datetime.now()
@@ -1147,7 +1145,6 @@ class RenderExpiresTests(UserTestCase):
         tasks.render_stale_documents()
 
         d1_fresh = Document.objects.get(pk=d1.pk)
-        ok_(not mock_render_document_delay.called)
         ok_(d1_fresh.last_rendered_at > earlier)
 
 

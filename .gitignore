@@ -40,3 +40,4 @@ james.ini
 celeryev.pid
 media/js/libs/ckeditor/source/ckbuilder
 .tox
+uploads/

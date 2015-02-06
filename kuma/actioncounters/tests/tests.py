@@ -6,7 +6,6 @@ from django.contrib.auth.models import AnonymousUser
 
 from django.http import HttpRequest
 from django.test import TestCase
-
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 
@@ -21,6 +20,7 @@ from .models import TestModel
 class ActionCountersTest(TestCase):
 
     def setUp(self):
+        super(ActionCountersTest, self).setUp()
         settings.DEBUG = True
         self.user1 = User.objects.create_user(
             'tester1', 'tester2@tester.com', 'tester1')
@@ -30,8 +30,7 @@ class ActionCountersTest(TestCase):
         self.obj_1 = TestModel(title="alpha")
         self.obj_1.save()
 
-    def mk_request(self, user=None, ip='192.168.123.123',
-            user_agent='FakeBrowser 1.0'):
+    def mk_request(self, user=None, ip='192.168.123.123', user_agent='FakeBrowser 1.0'):
         request = HttpRequest()
         request.user = user and user or AnonymousUser()
         request.method = 'GET'
