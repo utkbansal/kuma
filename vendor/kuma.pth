@@ -98,3 +98,4 @@ src/django-banish
 src/django-honeypot
 src/bitly-api-python
 src/django-taggit
+src/httplib2/python2
