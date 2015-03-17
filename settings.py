@@ -348,7 +348,6 @@ LANGUAGE_URL_IGNORED_PATHS = (
     '1',
     'files',
     '@api',
-    'grappelli',
     '__debug__',
     '.well-known',
     'users/persona/',
@@ -367,7 +366,6 @@ TEMPLATE_LOADERS = (
 
 JINGO_EXCLUDE_APPS = (
     'admin',
-    'grappelli',
     'waffle',
     'registration',
 )
@@ -460,8 +458,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
 
-    'grappelli.dashboard',
-    'grappelli',
     'django.contrib.admin',
 
     'django.contrib.sitemaps',
@@ -1202,9 +1198,6 @@ TEAMWORK_BASE_POLICIES = {
     'authenticated': (
         'wiki.view_document', 'wiki.add_document', 'wiki.add_revision'),
 }
-
-GRAPPELLI_ADMIN_TITLE = 'Mozilla Developer Network - Admin'
-GRAPPELLI_INDEX_DASHBOARD = 'admin_dashboard.CustomIndexDashboard'
 
 DBGETTEXT_PATH = 'kuma/core/'
 DBGETTEXT_ROOT = 'translations'
